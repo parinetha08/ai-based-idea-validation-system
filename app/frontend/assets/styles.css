@@ -1,42 +1,187 @@
+/* ---------- GLOBAL ---------- */
+
+body {
+    background: #030712;
+}
+
+.stApp {
+    background: #030712;
+    color: white;
+}
+
+.block-container {
+    max-width: 1200px;
+    padding-top: 2rem;
+}
+
+/* ---------- HERO ---------- */
+
 .hero {
     text-align: center;
-    padding: 30px;
-    border-radius: 20px;
-    background: linear-gradient(
-        135deg,
-        #4f46e5,
-        #7c3aed
-    );
-    color: white;
-    margin-bottom: 25px;
+    padding: 100px 40px;
+    border-radius: 30px;
+
+    background:
+        radial-gradient(circle at top,
+            rgba(239,255,0,0.08),
+            transparent 40%),
+        #030712;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    margin-bottom: 40px;
 }
 
 .hero h1 {
-    font-size: 3rem;
+    font-size: 5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.hero span {
+    color: #EFFF00;
 }
 
 .hero p {
     font-size: 1.2rem;
+    color: #94A3B8;
 }
 
-.score-card {
-    text-align: center;
-    padding: 20px;
-    border-radius: 20px;
-    background: linear-gradient(
-        135deg,
-        #2563eb,
-        #7c3aed
-    );
+.badge {
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    border-radius: 999px;
+
+    background: #111827;
+
+    border: 1px solid #334155;
+
     color: white;
+
+    margin-bottom: 25px;
 }
 
-.score-card h1 {
-    font-size: 4rem;
-    margin: 0;
+/* ---------- KPI CARDS ---------- */
+
+.metric-card {
+    background: #0F172A;
+
+    border: 1px solid #1E293B;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    transition: all .3s ease;
 }
 
-.score-card p {
-    margin: 0;
-    font-size: 1rem;
+.metric-card:hover {
+    border-color: #EFFF00;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 0 25px rgba(239,255,0,.15);
+}
+
+.metric-title {
+    color: #94A3B8;
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.metric-value {
+    color: white;
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    margin-top: 10px;
+}
+
+/* ---------- BUTTON ---------- */
+
+.stButton > button {
+
+    width: 100%;
+
+    height: 60px;
+
+    border-radius: 999px;
+
+    border: none !important;
+
+    background: #EFFF00 !important;
+
+    color: black !important;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    transition: all .3s ease;
+}
+
+.stButton > button:hover {
+
+    transform: scale(1.02);
+
+    box-shadow:
+        0 0 30px rgba(239,255,0,.3);
+}
+
+/* ---------- TEXT AREA ---------- */
+
+textarea {
+    border-radius: 20px !important;
+
+    background: #0F172A !important;
+
+    color: white !important;
+
+    border: 1px solid #1E293B !important;
+}
+
+/* ---------- TABS ---------- */
+
+.stTabs [data-baseweb="tab"] {
+
+    color: #94A3B8;
+
+    font-weight: 600;
+}
+
+.stTabs [aria-selected="true"] {
+
+    color: #EFFF00 !important;
+}
+
+/* ---------- CHARTS ---------- */
+
+.js-plotly-plot {
+    background: #0F172A !important;
+
+    border-radius: 20px;
+
+    padding: 10px;
+}
+
+/* ---------- ALERTS ---------- */
+
+.stSuccess {
+    border-radius: 15px;
+}
+
+.stError {
+    border-radius: 15px;
 }

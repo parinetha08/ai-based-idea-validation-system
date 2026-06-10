@@ -32,27 +32,8 @@ with open(css_path, "r", encoding="utf-8") as f:
 # HERO SECTION
 # --------------------------------------------------
 
-st.markdown(
-    """
-    <div class="hero">
-
-        <div class="badge">
-            🤖 AI Powered Startup Intelligence
-        </div>
-
-        <h1>
-            AI Idea <span>Validator</span>
-        </h1>
-
-        <p>
-            Validate startup ideas before investing
-            time, money and resources.
-        </p>
-
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.title("🚀 AI Idea Validator")
+st.caption("Validate startup ideas before investing time and money")
 
 # --------------------------------------------------
 # TABS

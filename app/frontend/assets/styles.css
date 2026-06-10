@@ -1,8 +1,6 @@
-/* ---------- GLOBAL ---------- */
-
-body {
-    background: #030712;
-}
+/* ===========================
+   PREMIUM AI VALIDATOR THEME
+=========================== */
 
 .stApp {
     background: #030712;
@@ -14,29 +12,30 @@ body {
     padding-top: 2rem;
 }
 
-/* ---------- HERO ---------- */
+/* HERO */
 
 .hero {
     text-align: center;
-    padding: 100px 40px;
+    padding: 80px 40px;
     border-radius: 30px;
 
     background:
-        radial-gradient(circle at top,
+        radial-gradient(
+            circle at top,
             rgba(239,255,0,0.08),
-            transparent 40%),
+            transparent 40%
+        ),
         #030712;
 
     border: 1px solid rgba(255,255,255,.08);
 
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .hero h1 {
-    font-size: 5rem;
+    font-size: 4.5rem;
     font-weight: 800;
     color: white;
-    margin-bottom: 10px;
 }
 
 .hero span {
@@ -44,14 +43,14 @@ body {
 }
 
 .hero p {
-    font-size: 1.2rem;
     color: #94A3B8;
+    font-size: 1.2rem;
 }
 
 .badge {
     display: inline-block;
 
-    padding: 10px 20px;
+    padding: 12px 22px;
 
     border-radius: 999px;
 
@@ -64,52 +63,61 @@ body {
     margin-bottom: 25px;
 }
 
-/* ---------- KPI CARDS ---------- */
+/* METRIC CARDS */
 
-.metric-card {
-    background: #0F172A;
+/* KPI CARDS */
 
-    border: 1px solid #1E293B;
+.metric-card{
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #1E293B
+    );
 
-    border-radius: 20px;
+    border: 2px solid #EFFF00;
 
-    padding: 25px;
+    border-radius: 22px;
+
+    padding: 30px;
 
     text-align: center;
+
+    min-height: 150px;
+
+    box-shadow:
+        0 0 25px rgba(239,255,0,.15);
 
     transition: all .3s ease;
 }
 
-.metric-card:hover {
-    border-color: #EFFF00;
-
-    transform: translateY(-4px);
+.metric-card:hover{
+    transform: translateY(-6px);
 
     box-shadow:
-        0 0 25px rgba(239,255,0,.15);
+        0 0 40px rgba(239,255,0,.4);
 }
 
-.metric-title {
+.metric-title{
     color: #94A3B8;
 
     font-size: 14px;
 
+    letter-spacing: 2px;
+
     text-transform: uppercase;
 
-    letter-spacing: 1px;
+    margin-bottom: 20px;
 }
 
-.metric-value {
-    color: white;
+.metric-value{
+    color: #EFFF00;
 
-    font-size: 32px;
+    font-size: 48px;
 
     font-weight: 800;
-
-    margin-top: 10px;
 }
 
-/* ---------- BUTTON ---------- */
+/* BUTTON */
 
 .stButton > button {
 
@@ -119,69 +127,46 @@ body {
 
     border-radius: 999px;
 
-    border: none !important;
-
     background: #EFFF00 !important;
 
     color: black !important;
 
+    border: none !important;
+
     font-size: 18px;
 
     font-weight: 700;
-
-    transition: all .3s ease;
 }
 
-.stButton > button:hover {
-
-    transform: scale(1.02);
-
-    box-shadow:
-        0 0 30px rgba(239,255,0,.3);
-}
-
-/* ---------- TEXT AREA ---------- */
+/* TEXT AREA */
 
 textarea {
-    border-radius: 20px !important;
 
     background: #0F172A !important;
 
     color: white !important;
 
+    border-radius: 20px !important;
+
     border: 1px solid #1E293B !important;
 }
 
-/* ---------- TABS ---------- */
-
-.stTabs [data-baseweb="tab"] {
-
-    color: #94A3B8;
-
-    font-weight: 600;
-}
+/* TABS */
 
 .stTabs [aria-selected="true"] {
-
     color: #EFFF00 !important;
 }
 
-/* ---------- CHARTS ---------- */
+/* PLOTLY */
 
 .js-plotly-plot {
-    background: #0F172A !important;
-
     border-radius: 20px;
-
-    padding: 10px;
 }
 
-/* ---------- ALERTS ---------- */
+/* FOOTER */
 
-.stSuccess {
-    border-radius: 15px;
-}
-
-.stError {
-    border-radius: 15px;
+.footer {
+    text-align: center;
+    color: #94A3B8;
+    margin-top: 30px;
 }

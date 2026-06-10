@@ -3,5 +3,5 @@ def parse_output(data):
         "score": data.get("score"),
         "demand": data.get("demand"),
         "risks": data.get("risks"),
-        "improvements": data.get("improvements")
+        "improvements": data.get("improvements"),
     }

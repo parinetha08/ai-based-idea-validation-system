@@ -9,12 +9,9 @@ def analyze_idea(idea: str):
     return {
         "score": score,
         "demand": demand,
-        "risks": [
-            "Competition from existing products",
-            "User adoption challenges"
-        ],
+        "risks": ["Competition from existing products", "User adoption challenges"],
         "improvements": [
             "Focus on a specific target audience",
-            "Build MVP before scaling"
-        ]
+            "Build MVP before scaling",
+        ],
     }

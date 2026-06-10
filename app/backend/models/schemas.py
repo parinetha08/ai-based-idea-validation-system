@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 
+
 class IdeaRequest(BaseModel):
     idea: str
+
 
 class IdeaResponse(BaseModel):
     score: int

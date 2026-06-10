@@ -1,0 +1,172 @@
+/* ===========================
+   PREMIUM AI VALIDATOR THEME
+=========================== */
+
+.stApp {
+    background: #030712;
+    color: white;
+}
+
+.block-container {
+    max-width: 1200px;
+    padding-top: 2rem;
+}
+
+/* HERO */
+
+.hero {
+    text-align: center;
+    padding: 80px 40px;
+    border-radius: 30px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(239,255,0,0.08),
+            transparent 40%
+        ),
+        #030712;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    margin-bottom: 50px;
+}
+
+.hero h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: white;
+}
+
+.hero span {
+    color: #EFFF00;
+}
+
+.hero p {
+    color: #94A3B8;
+    font-size: 1.2rem;
+}
+
+.badge {
+    display: inline-block;
+
+    padding: 12px 22px;
+
+    border-radius: 999px;
+
+    background: #111827;
+
+    border: 1px solid #334155;
+
+    color: white;
+
+    margin-bottom: 25px;
+}
+
+/* METRIC CARDS */
+
+/* KPI CARDS */
+
+.metric-card{
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #1E293B
+    );
+
+    border: 2px solid #EFFF00;
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    min-height: 150px;
+
+    box-shadow:
+        0 0 25px rgba(239,255,0,.15);
+
+    transition: all .3s ease;
+}
+
+.metric-card:hover{
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 0 40px rgba(239,255,0,.4);
+}
+
+.metric-title{
+    color: #94A3B8;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 20px;
+}
+
+.metric-value{
+    color: #EFFF00;
+
+    font-size: 48px;
+
+    font-weight: 800;
+}
+
+/* BUTTON */
+
+.stButton > button {
+
+    width: 100%;
+
+    height: 60px;
+
+    border-radius: 999px;
+
+    background: #EFFF00 !important;
+
+    color: black !important;
+
+    border: none !important;
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+/* TEXT AREA */
+
+textarea {
+
+    background: #0F172A !important;
+
+    color: white !important;
+
+    border-radius: 20px !important;
+
+    border: 1px solid #1E293B !important;
+}
+
+/* TABS */
+
+.stTabs [aria-selected="true"] {
+    color: #EFFF00 !important;
+}
+
+/* PLOTLY */
+
+.js-plotly-plot {
+    border-radius: 20px;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    color: #94A3B8;
+    margin-top: 30px;
+}

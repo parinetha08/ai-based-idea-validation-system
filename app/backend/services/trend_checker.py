@@ -1,8 +1,9 @@
-def check_trend(idea: str) -> str:
-    keywords = ["ai", "automation", "startup", "health", "education"]
+def check_trend(idea: str):
+    idea = idea.lower()
 
-    for word in keywords:
-        if word.lower() in idea.lower():
-            return "High"
-
-    return "Medium"
+    if "ai" in idea:
+        return "High"
+    elif "health" in idea or "education" in idea:
+        return "Medium"
+    else:
+        return "Low"

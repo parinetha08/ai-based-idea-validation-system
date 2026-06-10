@@ -10,30 +10,45 @@ def render_results_panel(result):
 
     st.markdown("## 📊 Startup Validation Report")
 
+    # Get score first
+    score = result["score"]
+
     # -----------------------------
     # KPI CARDS (BRIGHT + CLEAN)
     # -----------------------------
     c1, c2, c3, c4 = st.columns(4)
 
     with c1:
-        metric_card("SCORE", f"{result['score']}")
+        metric_card("SCORE", f"{score}")
 
     with c2:
         metric_card("DEMAND", result["demand"])
 
     with c3:
-        metric_card("RISK", "Medium")
+        if score >= 80:
+            risk_level = "Low"
+        elif score >= 70:
+            risk_level = "Medium"
+        else:
+            risk_level = "High"
+
+        metric_card("RISK", risk_level)
 
     with c4:
-        metric_card("SCALE", "85%")
+        if score >= 80:
+            scale = "90%"
+        elif score >= 70:
+            scale = "75%"
+        else:
+            scale = "60%"
+
+        metric_card("SCALE", scale)
 
     st.markdown("---")
 
     # -----------------------------
-    # SCORE LOGIC (FIXED)
+    # SCORE LOGIC
     # -----------------------------
-    score = result["score"]
-
     if score >= 90:
         st.success("🔥 Exceptional startup opportunity")
     elif score >= 80:
@@ -85,14 +100,14 @@ def render_results_panel(result):
             theta=metrics,
             fill="toself",
             name="Idea",
-            line=dict(color="#EFFF00")
+            line=dict(color="#EFFF00"),
         )
     )
 
     radar.update_layout(
         polar=dict(radialaxis=dict(visible=True, range=[0, 100])),
         showlegend=False,
-        height=500
+        height=500,
     )
 
     st.plotly_chart(radar, use_container_width=True)
@@ -102,10 +117,12 @@ def render_results_panel(result):
     # -----------------------------
     st.subheader("📈 Detailed Analytics")
 
-    df = pd.DataFrame({
-        "Metric": metrics,
-        "Score": values
-    })
+    df = pd.DataFrame(
+        {
+            "Metric": metrics,
+            "Score": values,
+        }
+    )
 
     fig = px.bar(df, x="Metric", y="Score", text="Score")
 
@@ -131,7 +148,7 @@ def render_results_panel(result):
     st.markdown("---")
 
     # -----------------------------
-    # INVESTOR VIEW (NO GRADE CARD REMOVED)
+    # INVESTOR VIEW
     # -----------------------------
     st.subheader("💰 Investor Recommendation")
 
@@ -146,8 +163,11 @@ def render_results_panel(result):
     # AI CONFIDENCE
     # -----------------------------
     st.subheader("🤖 AI Confidence")
-    st.progress(87)
-    st.caption("87% confidence based on evaluation signals.")
+
+    confidence = min(score + 10, 95)
+
+    st.progress(confidence)
+    st.caption(f"{confidence}% confidence based on evaluation signals.")
 
     st.markdown("---")
 
@@ -157,18 +177,20 @@ def render_results_panel(result):
     report = f"""
 AI IDEA VALIDATION REPORT
 
-Score: {result['score']}
-Demand: {result['demand']}
+Score: {score}
+Demand: {result["demand"]}
+Risk: {risk_level}
+Scale: {scale}
 
 Risks:
-{chr(10).join(result['risks'])}
+{chr(10).join(result["risks"])}
 
 Improvements:
-{chr(10).join(result['improvements'])}
+{chr(10).join(result["improvements"])}
 """
 
     st.download_button(
         "📄 Download Report",
         report,
-        file_name="startup_report.txt"
+        file_name="startup_report.txt",
     )

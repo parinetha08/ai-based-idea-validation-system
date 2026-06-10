@@ -1,0 +1,34 @@
+# Environment Variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# IDE Files
+.vscode/
+.idea/
+
+# Streamlit
+.streamlit/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test Cache
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/

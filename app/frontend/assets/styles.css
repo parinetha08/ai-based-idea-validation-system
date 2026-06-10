@@ -1,0 +1,42 @@
+.hero {
+    text-align: center;
+    padding: 30px;
+    border-radius: 20px;
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #7c3aed
+    );
+    color: white;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+.score-card {
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+    color: white;
+}
+
+.score-card h1 {
+    font-size: 4rem;
+    margin: 0;
+}
+
+.score-card p {
+    margin: 0;
+    font-size: 1rem;
+}

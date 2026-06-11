@@ -2,6 +2,7 @@ image: python:3.13
 
 stages:
   - lint
+  - format
   - type_check
   - test
 
@@ -15,6 +16,11 @@ lint:
     - ruff check .
     - ruff format --check .
 
+format:
+  stage: format
+  script:
+    - ruff format --check .
+
 test:
   stage: test
   script:
@@ -24,7 +30,7 @@ security:
   stage: test
   script:
     - bandit -r app
-    
+
 type_check:
   stage: type_check
   script:

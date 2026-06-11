@@ -7,7 +7,6 @@ from components.score_card import metric_card
 
 
 def render_results_panel(result):
-
     st.markdown("## 📊 Startup Validation Report")
 
     # Get score first

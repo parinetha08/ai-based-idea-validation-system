@@ -65,7 +65,7 @@ with tab1:
 
             try:
                 response = requests.post(
-                    "http://127.0.0.1:8000/validate", json={"idea": idea} , timeout=10
+                    "http://127.0.0.1:8000/validate", json={"idea": idea}, timeout=10
                 )
 
                 if response.status_code == 200:

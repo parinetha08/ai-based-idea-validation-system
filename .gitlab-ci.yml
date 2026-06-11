@@ -2,8 +2,9 @@ image: python:3.13
 
 stages:
   - lint
+  - type_check
   - test
-
+  
 before_script:
   - pip install -r requirements.txt
   - pip install pytest ruff

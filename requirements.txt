@@ -10,3 +10,4 @@ numpy>=2.0.0
 plotly
 mypy>=1.0.0
 bandit
+pytest-cov

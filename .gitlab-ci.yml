@@ -2,9 +2,10 @@ image: python:3.13
 
 stages:
   - lint
-  - format
-  - type_check
   - test
+  - type_check
+  - format
+  - coverage
 
 before_script:
   - pip install -r requirements.txt
@@ -36,3 +37,7 @@ type_check:
   script:
     - mypy .
 
+coverage:
+  stage: coverage
+  script:
+    - python -m pytest --cov=app --cov-report=term

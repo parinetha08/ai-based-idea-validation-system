@@ -18,3 +18,8 @@ test:
   stage: test
   script:
     - python -m pytest
+
+type_check:
+  stage: type_check
+  script:
+    - mypy .

@@ -20,7 +20,13 @@ test:
   script:
     - python -m pytest
 
+security:
+  stage: test
+  script:
+    - bandit -r app
+    
 type_check:
   stage: type_check
   script:
     - mypy .
+

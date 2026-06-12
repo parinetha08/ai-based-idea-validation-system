@@ -96,8 +96,9 @@ with tab1:
             progress_text.empty()
 
             try:
-                result = analyze_idea(idea=idea, provider=provider, api_key=api_key)
+                st.write("Calling analyze_idea...")
 
+                result = analyze_idea(idea=idea, provider=provider, api_key=api_key)
                 # Fallback metrics if backend doesn't provide them
                 if "metrics" not in result:
                     result["metrics"] = {

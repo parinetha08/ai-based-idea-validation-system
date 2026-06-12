@@ -38,51 +38,6 @@ An AI-powered platform that analyzes, validates, and scores startup or project i
 ---
 
 ## 🏗️ Project Structure
-Here’s a **clean, professional, ready-to-paste `README.md`** tailored to your project structure (AI Idea Validation System with OpenAI + Gemini + Ollama + multilingual + Streamlit + FastAPI backend).
-
----
-
-```md
-# 🚀 AI-Powered Idea Validation System
-
-An AI-powered platform that analyzes, validates, and scores startup or project ideas using multiple AI models (OpenAI, Gemini, and Ollama). It also supports multilingual input and provides structured feedback, market insights, and feasibility scoring.
-
----
-
-## 📌 Features
-
-### 🤖 AI Capabilities
-- Idea validation using LLMs (OpenAI / Gemini / Ollama)
-- Smart scoring engine for idea quality
-- Trend and market feasibility analysis
-- Prompt engineering pipeline for structured evaluation
-
-### 🌍 Multilingual Support
-- Supports multiple Indian languages:
-  - English 🇬🇧
-  - Hindi 🇮🇳
-  - Telugu 🇮🇳
-- Built-in translation layer (`i18n` module)
-
-### 🧠 BYOK (Bring Your Own Key)
-- Users can provide their own API keys
-- Supports:
-  - OpenAI API
-  - Gemini API
-- Flexible model switching
-
-### ⚡ Local AI Support
-- Ollama integration for offline/local inference
-- No API dependency required for local testing
-
-### 🌐 Full Stack Architecture
-- FastAPI backend
-- Streamlit frontend
-- Modular service-based design
-
----
-
-## 🏗️ Project Structure
 
 ```
 

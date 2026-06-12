@@ -3,10 +3,13 @@ image: python:3.13
 stages:
   - lint
   - test
+  - type_check
+  - format
+  - coverage
 
 before_script:
   - pip install -r requirements.txt
-  - pip install pytest ruff
+  - pip install pytest ruff 
 
 lint:
   stage: lint
@@ -14,7 +17,27 @@ lint:
     - ruff check .
     - ruff format --check .
 
+format:
+  stage: format
+  script:
+    - ruff format --check .
+
 test:
   stage: test
   script:
     - python -m pytest
+
+security:
+  stage: test
+  script:
+    - bandit -r app
+
+type_check:
+  stage: type_check
+  script:
+    - mypy .
+
+coverage:
+  stage: coverage
+  script:
+    - python -m pytest --cov=app --cov-report=term

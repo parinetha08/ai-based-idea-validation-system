@@ -2,7 +2,6 @@ import streamlit as st
 
 
 def metric_card(title, value):
-
     st.markdown(
         f"""
         <div class="metric-card">

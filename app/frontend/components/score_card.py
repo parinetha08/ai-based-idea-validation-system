@@ -1,7 +1,7 @@
 import streamlit as st
 
-def metric_card(title, value):
 
+def metric_card(title, value):
     st.markdown(
         f"""
         <div class="metric-card">
@@ -9,5 +9,5 @@ def metric_card(title, value):
             <div class="metric-value">{value}</div>
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )

@@ -1,6 +1,7 @@
 import streamlit as st
 from pathlib import Path
 import time
+import requests
 
 from components.idea_input import render_idea_input
 from components.results_panel import render_results_panel
@@ -10,11 +11,7 @@ from components.comparison_view import render_comparison_view
 # PAGE CONFIG
 # --------------------------------------------------
 
-st.set_page_config(
-    page_title="AI Idea Validator",
-    page_icon="🚀",
-    layout="wide"
-)
+st.set_page_config(page_title="AI Idea Validator", page_icon="🚀", layout="wide")
 
 # --------------------------------------------------
 # LOAD CSS
@@ -23,10 +20,7 @@ st.set_page_config(
 css_path = Path(__file__).parent / "assets" / "styles.css"
 
 with open(css_path, "r", encoding="utf-8") as f:
-    st.markdown(
-        f"<style>{f.read()}</style>",
-        unsafe_allow_html=True
-    )
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # --------------------------------------------------
 # HERO SECTION
@@ -39,96 +33,67 @@ st.caption("Validate startup ideas before investing time and money")
 # TABS
 # --------------------------------------------------
 
-tab1, tab2 = st.tabs(
-    [
-        "💡 Validate Idea",
-        "🆚 Compare Ideas"
-    ]
-)
+tab1, tab2 = st.tabs(["💡 Validate Idea", "🆚 Compare Ideas"])
 
 # --------------------------------------------------
 # TAB 1
 # --------------------------------------------------
 
 with tab1:
-
     idea = render_idea_input()
 
-    if st.button(
-        "🚀 Analyze Startup Idea",
-        use_container_width=True
-    ):
-
+    if st.button("🚀 Analyze Startup Idea", use_container_width=True):
         if not idea.strip():
-
-            st.warning(
-                "Please enter your startup idea first."
-            )
+            st.warning("Please enter your startup idea first.")
 
         else:
-
             progress_text = st.empty()
 
-            progress_text.info(
-                "🔍 Checking market demand..."
-            )
+            progress_text.info("🔍 Checking market demand...")
             time.sleep(1)
 
-            progress_text.info(
-                "📈 Estimating scalability..."
-            )
+            progress_text.info("📈 Estimating scalability...")
             time.sleep(1)
 
-            progress_text.info(
-                "⚡ Evaluating feasibility..."
-            )
+            progress_text.info("⚡ Evaluating feasibility...")
             time.sleep(1)
 
-            progress_text.info(
-                "🧠 Generating AI insights..."
-            )
+            progress_text.info("🧠 Generating AI insights...")
             time.sleep(1)
 
             progress_text.empty()
 
-            sample_result = {
+            try:
+                response = requests.post(
+                    "http://127.0.0.1:8000/validate", json={"idea": idea}, timeout=10
+                )
 
-                "score": 82,
+                if response.status_code == 200:
+                    result = response.json()
 
-                "demand": "High",
+                    # Add metrics if backend doesn't provide them
+                    if "metrics" not in result:
+                        result["metrics"] = {
+                            "Feasibility": result["score"],
+                            "Uniqueness": 75,
+                            "Demand": 90,
+                            "Scalability": 85,
+                            "Innovation": 80,
+                        }
 
-                "risks": [
-                    "Strong competition in the market",
-                    "Customer acquisition cost may be high",
-                    "User adoption challenge in early stages"
-                ],
+                    render_results_panel(result)
 
-                "improvements": [
-                    "Focus on a niche audience initially",
-                    "Create a strong referral strategy",
-                    "Integrate WhatsApp for engagement",
-                    "Launch MVP before scaling"
-                ],
+                else:
+                    st.error(f"Backend error: {response.status_code}")
 
-                "metrics": {
-                    "Feasibility": 82,
-                    "Uniqueness": 75,
-                    "Demand": 91,
-                    "Scalability": 86,
-                    "Innovation": 80
-                }
-            }
-
-            render_results_panel(
-                sample_result
-            )
+            except Exception as e:
+                st.error(f"Could not connect to backend: {e}")
 
 # --------------------------------------------------
 # TAB 2
 # --------------------------------------------------
 
 with tab2:
-
     render_comparison_view()
 
 # --------------------------------------------------
@@ -145,5 +110,5 @@ st.markdown(
         </p>
     </center>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )

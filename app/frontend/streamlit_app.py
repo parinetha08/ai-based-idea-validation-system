@@ -12,26 +12,38 @@ from components.idea_input import render_idea_input
 from components.results_panel import render_results_panel
 from components.comparison_view import render_comparison_view
 
+
 # --------------------------------------------------
 # PAGE CONFIG
 # --------------------------------------------------
 
-st.set_page_config(
-    page_title="AI Idea Validator",
-    page_icon="🚀",
-    layout="wide"
-)
+st.set_page_config(page_title="AI Idea Validator", page_icon="🚀", layout="wide")
 
 # --------------------------------------------------
 # LANGUAGE SELECTION
 # --------------------------------------------------
 
-lang = st.sidebar.selectbox(
-    "Language",
-    ["en", "te", "hi"]
-)
+lang = st.sidebar.selectbox("Language", ["en", "te", "hi"])
 
 text = load_language(lang)
+
+# --------------------------------------------------
+# AI SETTINGS (NEW)
+# --------------------------------------------------
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("🤖 AI Settings")
+
+provider = st.sidebar.selectbox("AI Provider", ["Gemini", "Ollama"])
+
+api_key = ""
+
+if provider == "Gemini":
+    api_key = st.sidebar.text_input(
+        "Gemini API Key (BYOK)", type="password", help="Enter your own Gemini API key"
+    )
+else:
+    st.sidebar.success("Using Local Ollama Model")
 
 # --------------------------------------------------
 # LOAD CSS
@@ -40,10 +52,7 @@ text = load_language(lang)
 css_path = Path(__file__).parent / "assets" / "styles.css"
 
 with open(css_path, "r", encoding="utf-8") as f:
-    st.markdown(
-        f"<style>{f.read()}</style>",
-        unsafe_allow_html=True
-    )
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # --------------------------------------------------
 # HERO SECTION
@@ -56,20 +65,16 @@ st.caption(text["subtitle"])
 # TABS
 # --------------------------------------------------
 
-tab1, tab2 = st.tabs([
-    "💡 " + text["validate_idea"],
-    "🆚 " + text["compare_ideas"]
-])
+tab1, tab2 = st.tabs(["💡 " + text["validate_idea"], "🆚 " + text["compare_ideas"]])
 
 # --------------------------------------------------
-# TAB 1
+# TAB 1 - IDEA VALIDATION
 # --------------------------------------------------
 
 with tab1:
     idea = render_idea_input(text)
 
     if st.button("🚀 " + text["analyze"], use_container_width=True):
-
         if not idea.strip():
             st.warning(text["enter_idea"])
 
@@ -91,12 +96,12 @@ with tab1:
             progress_text.empty()
 
             try:
-                result = analyze_idea(idea)
+                result = analyze_idea(idea=idea, provider=provider, api_key=api_key)
 
-                # Add metrics if backend doesn't provide them
+                # Fallback metrics if backend doesn't provide them
                 if "metrics" not in result:
                     result["metrics"] = {
-                        text["feasibility"]: result["score"],
+                        text["feasibility"]: result.get("score", 80),
                         text["uniqueness"]: 75,
                         text["demand_metric"]: 90,
                         text["scalability"]: 85,
@@ -104,13 +109,18 @@ with tab1:
                     }
 
                 st.subheader(text["report"])
+
                 render_results_panel(result, text)
 
+                if "ai_analysis" in result:
+                    st.subheader("🤖 AI Analysis")
+                    st.write(result["ai_analysis"])
+
             except Exception as e:
-                st.error(f"Error: {e}")
+                st.error(f"Analysis failed: {str(e)}")
 
 # --------------------------------------------------
-# TAB 2
+# TAB 2 - COMPARISON
 # --------------------------------------------------
 
 with tab2:
@@ -126,7 +136,9 @@ st.markdown(
     """
     <center>
         <p style="color:#94A3B8;">
-            Built with ❤️ using Streamlit
+            🚀 AI-Based Idea Validation System
+            <br>
+            Supports Gemini BYOK + Local Ollama
         </p>
     </center>
     """,

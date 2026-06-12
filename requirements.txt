@@ -11,3 +11,4 @@ plotly
 mypy>=1.0.0
 bandit
 pytest-cov
+requests

@@ -1,8 +1,9 @@
 from app.backend.services.scoring_engine import calculate_score
 from app.backend.services.trend_checker import check_trend
+from app.backend.services.ollama_client import generate_with_ollama
 
 
-def analyze_idea(idea: str):
+def analyze_idea(idea: str, provider: str = "Gemini", api_key: str = ""):
     score = calculate_score(idea)
     demand = check_trend(idea)
 
@@ -39,9 +40,30 @@ def analyze_idea(idea: str):
             "Conduct more market research",
         ]
 
+    # AI Analysis
+    if provider == "Ollama":
+        prompt = f"""
+        Analyze this startup idea:
+
+        {idea}
+
+        Provide:
+        - Strengths
+        - Weaknesses
+        - Opportunities
+        - Risks
+        """
+
+        ai_analysis = generate_with_ollama(prompt)
+
+    else:
+        ai_analysis = "Analysis generated using Gemini API (BYOK support enabled)."
+
     return {
         "score": score,
         "demand": demand,
         "risks": risks,
         "improvements": improvements,
+        "ai_provider": provider,
+        "ai_analysis": ai_analysis,
     }

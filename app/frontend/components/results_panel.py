@@ -6,33 +6,49 @@ import plotly.graph_objects as go
 from components.score_card import metric_card
 
 
-def render_results_panel(result):
-    st.markdown("## 📊 Startup Validation Report")
+def render_results_panel(result, text):
 
-    # Get score first
+    st.markdown("## 📊 " + text["report"])
+
+    # -----------------------------
+    # GET SCORE
+    # -----------------------------
     score = result["score"]
 
     # -----------------------------
-    # KPI CARDS (BRIGHT + CLEAN)
+    # KPI CARDS
     # -----------------------------
     c1, c2, c3, c4 = st.columns(4)
 
+    # SCORE
     with c1:
-        metric_card("SCORE", f"{score}")
+        metric_card(text["score"], f"{score}")
 
+    # DEMAND
     with c2:
-        metric_card("DEMAND", result["demand"])
+        demand_value = result["demand"]
 
+        if demand_value.lower() == "high":
+            demand_value = text["high"]
+        elif demand_value.lower() == "medium":
+            demand_value = text["medium"]
+        else:
+            demand_value = text["low"]
+
+        metric_card(text["demand"], demand_value)
+
+    # RISK
     with c3:
         if score >= 80:
-            risk_level = "Low"
+            risk_level = text["low"]
         elif score >= 70:
-            risk_level = "Medium"
+            risk_level = text["medium"]
         else:
-            risk_level = "High"
+            risk_level = text["high"]
 
-        metric_card("RISK", risk_level)
+        metric_card(text["risk"], risk_level)
 
+    # SCALE
     with c4:
         if score >= 80:
             scale = "90%"
@@ -41,7 +57,7 @@ def render_results_panel(result):
         else:
             scale = "60%"
 
-        metric_card("SCALE", scale)
+        metric_card(text["scale"], scale)
 
     st.markdown("---")
 
@@ -49,26 +65,26 @@ def render_results_panel(result):
     # SCORE LOGIC
     # -----------------------------
     if score >= 90:
-        st.success("🔥 Exceptional startup opportunity")
+        st.success(text["exceptional"])
     elif score >= 80:
-        st.success("🚀 Strong startup potential")
+        st.success(text["strong"])
     elif score >= 70:
-        st.warning("📈 Promising but needs refinement")
+        st.warning(text["promising"])
     else:
-        st.error("⚠️ High-risk concept")
+        st.error(text["high_risk"])
 
     st.markdown("---")
 
     # -----------------------------
     # GAUGE CHART
     # -----------------------------
-    st.subheader("🎯 Overall Validation Score")
+    st.subheader("🎯 " + text["overall_score"])
 
     gauge = go.Figure(
         go.Indicator(
             mode="gauge+number",
             value=score,
-            title={"text": "Idea Score"},
+            title={"text": text["idea_score"]},
             gauge={
                 "axis": {"range": [0, 100]},
                 "bar": {"color": "#EFFF00"},
@@ -84,9 +100,9 @@ def render_results_panel(result):
     st.plotly_chart(gauge, use_container_width=True)
 
     # -----------------------------
-    # RADAR
+    # RADAR CHART
     # -----------------------------
-    st.subheader("🕸 Startup Strength Radar")
+    st.subheader("🕸 " + text["strength_radar"])
 
     metrics = list(result["metrics"].keys())
     values = list(result["metrics"].values())
@@ -98,13 +114,18 @@ def render_results_panel(result):
             r=values,
             theta=metrics,
             fill="toself",
-            name="Idea",
+            name=text["report"],
             line=dict(color="#EFFF00"),
         )
     )
 
     radar.update_layout(
-        polar=dict(radialaxis=dict(visible=True, range=[0, 100])),
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 100]
+            )
+        ),
         showlegend=False,
         height=500,
     )
@@ -114,16 +135,21 @@ def render_results_panel(result):
     # -----------------------------
     # BAR CHART
     # -----------------------------
-    st.subheader("📈 Detailed Analytics")
+    st.subheader("📈 " + text["analytics"])
 
     df = pd.DataFrame(
         {
-            "Metric": metrics,
-            "Score": values,
+            text["metric"]: metrics,
+            text["score"]: values,
         }
     )
 
-    fig = px.bar(df, x="Metric", y="Score", text="Score")
+    fig = px.bar(
+        df,
+        x=text["metric"],
+        y=text["score"],
+        text=text["score"],
+    )
 
     st.plotly_chart(fig, use_container_width=True)
 
@@ -135,49 +161,51 @@ def render_results_panel(result):
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("⚠️ Risks")
+        st.subheader("⚠️ " + text["risks"])
+
         for risk in result["risks"]:
             st.error(risk)
 
     with col2:
-        st.subheader("✨ Recommendations")
+        st.subheader("✨ " + text["recommendations"])
+
         for item in result["improvements"]:
             st.success(item)
 
     st.markdown("---")
 
     # -----------------------------
-    # INVESTOR VIEW
+    # INVESTOR RECOMMENDATION
     # -----------------------------
-    st.subheader("💰 Investor Recommendation")
+    st.subheader("💰 " + text["investor_recommendation"])
 
     if score >= 85:
-        st.success("✅ INVESTABLE — Strong market potential")
+        st.success(text["investable"])
     elif score >= 70:
-        st.warning("🟡 CONDITIONAL — Needs refinement")
+        st.warning(text["conditional"])
     else:
-        st.error("🔴 NOT RECOMMENDED")
+        st.error(text["not_recommended"])
 
     # -----------------------------
     # AI CONFIDENCE
     # -----------------------------
-    st.subheader("🤖 AI Confidence")
+    st.subheader("🤖 " + text["ai_confidence"])
 
     confidence = min(score + 10, 95)
 
     st.progress(confidence)
-    st.caption(f"{confidence}% confidence based on evaluation signals.")
+    st.caption(f"{confidence}% {text['confidence_caption']}")
 
     st.markdown("---")
 
     # -----------------------------
-    # DOWNLOAD
+    # DOWNLOAD REPORT
     # -----------------------------
     report = f"""
 AI IDEA VALIDATION REPORT
 
 Score: {score}
-Demand: {result["demand"]}
+Demand: {demand_value}
 Risk: {risk_level}
 Scale: {scale}
 
@@ -189,7 +217,7 @@ Improvements:
 """
 
     st.download_button(
-        "📄 Download Report",
+        "📄 " + text["download_report"],
         report,
         file_name="startup_report.txt",
     )

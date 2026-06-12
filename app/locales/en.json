@@ -1,0 +1,56 @@
+{
+  "title": "AI Based Idea Validation System",
+  "analyze": "Analyze",
+  "report": "Startup Validation Report",
+
+  "score": "Score",
+  "demand": "Demand",
+  "risk": "Risk",
+  "scale": "Scale",
+
+  "overall_score": "Overall Validation Score",
+  "strength_radar": "Startup Strength Radar",
+  "analytics": "Detailed Analytics",
+
+  "risks": "Risks",
+  "recommendations": "Recommendations",
+
+  "investor_recommendation": "Investor Recommendation",
+  "ai_confidence": "AI Confidence",
+
+  "download_report": "Download Report",
+
+  "enter_idea": "Please enter your startup idea first.",
+  "checking_demand": "🔍 Checking market demand...",
+  "estimating_scale": "📈 Estimating scalability...",
+  "evaluating_feasibility": "⚡ Evaluating feasibility...",
+  "generating_insights": "🧠 Generating AI insights...",
+
+  "exceptional": "🔥 Exceptional startup opportunity",
+  "strong": "🚀 Strong startup potential",
+  "promising": "📈 Promising but needs refinement",
+  "high_risk": "⚠️ High-risk concept",
+
+  "low": "Low",
+  "medium": "Medium",
+  "high": "High",
+
+  "investable": "✅ INVESTABLE — Strong market potential",
+  "conditional": "🟡 CONDITIONAL — Needs refinement",
+  "not_recommended": "🔴 NOT RECOMMENDED",
+
+  "confidence_caption": "confidence based on evaluation signals.",
+  "feasibility": "Feasibility",
+  "uniqueness": "Uniqueness",
+  "demand_metric": "Demand",
+  "scalability": "Scalability",
+  "innovation": "Innovation",
+  "metric": "Metric",
+  "idea_score": "Idea Score",
+  "validate_idea": "Validate Idea",
+  "compare_ideas": "Compare Ideas",
+  "enter_startup_idea": "Enter Your Startup Idea",
+  "describe_idea": "Describe your idea",
+  "idea_placeholder": "Example:\n\nAn AI assistant that helps students find internships based on skills, interests and real-time opportunities.",
+  "subtitle": "Validate startup ideas before investing time and money"
+}

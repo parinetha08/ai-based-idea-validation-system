@@ -1,7 +1,12 @@
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parents[2]))
 import streamlit as st
 from pathlib import Path
 import time
-import requests
+
+from app.backend.services.idea_analyzer import analyze_idea
 
 from components.idea_input import render_idea_input
 from components.results_panel import render_results_panel
@@ -11,7 +16,11 @@ from components.comparison_view import render_comparison_view
 # PAGE CONFIG
 # --------------------------------------------------
 
-st.set_page_config(page_title="AI Idea Validator", page_icon="🚀", layout="wide")
+st.set_page_config(
+    page_title="AI Idea Validator",
+    page_icon="🚀",
+    layout="wide"
+)
 
 # --------------------------------------------------
 # LOAD CSS
@@ -20,7 +29,10 @@ st.set_page_config(page_title="AI Idea Validator", page_icon="🚀", layout="wid
 css_path = Path(__file__).parent / "assets" / "styles.css"
 
 with open(css_path, "r", encoding="utf-8") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True
+    )
 
 # --------------------------------------------------
 # HERO SECTION
@@ -33,7 +45,9 @@ st.caption("Validate startup ideas before investing time and money")
 # TABS
 # --------------------------------------------------
 
-tab1, tab2 = st.tabs(["💡 Validate Idea", "🆚 Compare Ideas"])
+tab1, tab2 = st.tabs(
+    ["💡 Validate Idea", "🆚 Compare Ideas"]
+)
 
 # --------------------------------------------------
 # TAB 1
@@ -42,52 +56,57 @@ tab1, tab2 = st.tabs(["💡 Validate Idea", "🆚 Compare Ideas"])
 with tab1:
     idea = render_idea_input()
 
-    if st.button("🚀 Analyze Startup Idea", use_container_width=True):
+    if st.button(
+        "🚀 Analyze Startup Idea",
+        use_container_width=True
+    ):
+
         if not idea.strip():
-            st.warning("Please enter your startup idea first.")
+            st.warning(
+                "Please enter your startup idea first."
+            )
 
         else:
             progress_text = st.empty()
 
-            progress_text.info("🔍 Checking market demand...")
+            progress_text.info(
+                "🔍 Checking market demand..."
+            )
             time.sleep(1)
 
-            progress_text.info("📈 Estimating scalability...")
+            progress_text.info(
+                "📈 Estimating scalability..."
+            )
             time.sleep(1)
 
-            progress_text.info("⚡ Evaluating feasibility...")
+            progress_text.info(
+                "⚡ Evaluating feasibility..."
+            )
             time.sleep(1)
 
-            progress_text.info("🧠 Generating AI insights...")
+            progress_text.info(
+                "🧠 Generating AI insights..."
+            )
             time.sleep(1)
 
             progress_text.empty()
 
             try:
-                response = requests.post(
-                    "http://127.0.0.1:8000/validate", json={"idea": idea}
-                )
+                result = analyze_idea(idea)
 
-                if response.status_code == 200:
-                    result = response.json()
+                if "metrics" not in result:
+                    result["metrics"] = {
+                        "Feasibility": result["score"],
+                        "Uniqueness": 75,
+                        "Demand": 90,
+                        "Scalability": 85,
+                        "Innovation": 80,
+                    }
 
-                    # Add metrics if backend doesn't provide them
-                    if "metrics" not in result:
-                        result["metrics"] = {
-                            "Feasibility": result["score"],
-                            "Uniqueness": 75,
-                            "Demand": 90,
-                            "Scalability": 85,
-                            "Innovation": 80,
-                        }
-
-                    render_results_panel(result)
-
-                else:
-                    st.error(f"Backend error: {response.status_code}")
+                render_results_panel(result)
 
             except Exception as e:
-                st.error(f"Could not connect to backend: {e}")
+                st.error(f"Error: {e}")
 
 # --------------------------------------------------
 # TAB 2

@@ -46,4 +46,14 @@ coverage:
   hooks:
     - id: bandit
       args: ["-x", "tests"]
+
+security-audit:
+  stage: test
+  script:
+    - pip install pip-audit
+    - pip-audit
+
+changelog:
+  script:
+    - git cliff -o CHANGELOG.md
        

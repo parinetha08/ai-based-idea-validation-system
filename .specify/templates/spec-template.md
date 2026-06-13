@@ -1,24 +1,12 @@
-# Feature Spec Template
+# Spec Template
 
-## Feature Name:
----
+## Overview
+Describe the feature.
 
-## Problem Statement:
-What problem does this feature solve?
+## Goals
+- Goal 1
+- Goal 2
 
-## Goal:
-What should the system achieve?
-
-## Inputs:
-What data does it take?
-
-## Outputs:
-What should it return?
-
-## Rules:
-- Constraints
-- Edge cases
-- AI behavior rules
-
-## Success Criteria:
-How do we know it works?
+## Requirements
+- Requirement 1
+- Requirement 2

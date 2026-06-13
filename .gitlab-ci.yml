@@ -58,4 +58,9 @@ changelog:
   script:
     - pip install git-cliff
     - git cliff -o CHANGELOG.md
-       
+
+semgrep:
+  stage: test
+  script:
+    - pip install semgrep
+    - semgrep --config=auto

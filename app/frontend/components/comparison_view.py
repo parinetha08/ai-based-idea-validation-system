@@ -29,7 +29,6 @@ def render_comparison_view():
         "Compare Ideas",
         use_container_width=True,
     ):
-
         if not idea1.strip() or not idea2.strip():
             st.warning("Please enter both ideas.")
 

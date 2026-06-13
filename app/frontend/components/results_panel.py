@@ -7,7 +7,6 @@ from components.score_card import metric_card
 
 
 def render_results_panel(result, text):
-
     st.markdown("## 📊 " + text["report"])
 
     # -----------------------------
@@ -120,12 +119,7 @@ def render_results_panel(result, text):
     )
 
     radar.update_layout(
-        polar=dict(
-            radialaxis=dict(
-                visible=True,
-                range=[0, 100]
-            )
-        ),
+        polar=dict(radialaxis=dict(visible=True, range=[0, 100])),
         showlegend=False,
         height=500,
     )

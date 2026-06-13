@@ -54,6 +54,8 @@ security-audit:
     - pip-audit
 
 changelog:
+  stage: test
   script:
+    - pip install git-cliff
     - git cliff -o CHANGELOG.md
        

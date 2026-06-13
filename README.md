@@ -2,6 +2,10 @@
 
 An AI-powered platform that analyzes, validates, and scores startup or project ideas using multiple AI models (OpenAI, Gemini, and Ollama). It also supports multilingual input and provides structured feedback, market insights, and feasibility scoring.
 
+Deploy link-
+Frontend:https://ai-based-idea-validation-system-1.onrender.com
+Backend:https://ai-based-idea-validation-system.onrender.com/docs
+
 ---
 
 ## 📌 Features

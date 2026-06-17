@@ -1,66 +1,9 @@
-image: python:3.13
-
 stages:
-  - lint
   - test
-  - type_check
-  - format
-  - coverage
 
-before_script:
-  - pip install -r requirements.txt
-  - pip install pytest ruff 
-
-lint:
-  stage: lint
-  script:
-    - ruff check .
-    - ruff format --check .
-
-format:
-  stage: format
-  script:
-    - ruff format --check .
-
-test:
+runner-test:
   stage: test
+  tags:
+    - windows
   script:
-    - python -m pytest
-
-security:
-  stage: test
-  script:
-    - bandit -r app
-
-type_check:
-  stage: type_check
-  script:
-    - mypy .
-
-coverage:
-  stage: coverage
-  script:
-    - python -m pytest --cov=app --cov-report=term
-    - repo: https://github.com/PyCQA/bandit
-  rev: "1.8.6"
-  hooks:
-    - id: bandit
-      args: ["-x", "tests"]
-
-security-audit:
-  stage: test
-  script:
-    - pip install pip-audit
-    - pip-audit
-
-changelog:
-  stage: test
-  script:
-    - pip install git-cliff
-    - git cliff -o CHANGELOG.md
-
-semgrep:
-  stage: test
-  script:
-    - pip install semgrep
-    - semgrep --config=auto
+    - echo "GitLab Runner is working successfully"

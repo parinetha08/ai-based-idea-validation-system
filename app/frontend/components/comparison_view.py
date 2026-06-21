@@ -1,12 +1,12 @@
-import sys
-from pathlib import Path
+"""UI component for comparing multiple idea outputs."""
 
-sys.path.append(str(Path(__file__).resolve().parents[3]))
 import streamlit as st
+
 from app.backend.services.idea_analyzer import analyze_idea
 
 
 def render_comparison_view():
+    """Render comparison view for idea evaluation results."""
     st.subheader("🆚 Compare Startup Ideas")
 
     col1, col2 = st.columns(2)

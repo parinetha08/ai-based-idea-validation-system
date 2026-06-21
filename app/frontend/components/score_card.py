@@ -1,13 +1,8 @@
+"""Score card UI component."""
+
 import streamlit as st
 
 
-def metric_card(title, value):
-    st.markdown(
-        f"""
-        <div class="metric-card">
-            <div class="metric-title">{title}</div>
-            <div class="metric-value">{value}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+def render_score_card(label: str, value):
+    """Render score card UI."""
+    st.metric(label=label, value=value)

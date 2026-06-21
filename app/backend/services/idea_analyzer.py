@@ -1,9 +1,20 @@
+"""Service for analyzing startup ideas."""
+
+from app.agents.idea_agent import run_idea_agent
 from app.backend.services.scoring_engine import calculate_score
 from app.backend.services.trend_checker import check_trend
-from app.backend.services.ollama_client import generate_with_ollama
 
 
-def analyze_idea(idea: str, provider: str = "Gemini", api_key: str = ""):
+def analyze_idea(
+    idea: str,
+    provider: str = "Gemini",
+    api_key: str = "",
+):
+    """Analyze a startup idea and return evaluation results."""
+
+    # Reserved for future Gemini BYOK implementation
+    _ = api_key
+
     score = calculate_score(idea)
     demand = check_trend(idea)
 
@@ -42,20 +53,7 @@ def analyze_idea(idea: str, provider: str = "Gemini", api_key: str = ""):
 
     # AI Analysis
     if provider == "Ollama":
-        prompt = f"""
-        Analyze this startup idea:
-
-        {idea}
-
-        Provide:
-        - Strengths
-        - Weaknesses
-        - Opportunities
-        - Risks
-        """
-
-        ai_analysis = generate_with_ollama(prompt)
-
+        ai_analysis = run_idea_agent(idea)
     else:
         ai_analysis = "Analysis generated using Gemini API (BYOK support enabled)."
 

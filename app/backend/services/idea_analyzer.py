@@ -12,9 +12,6 @@ def analyze_idea(
 ):
     """Analyze a startup idea and return evaluation results."""
 
-    # Reserved for future Gemini BYOK implementation
-    _ = api_key
-
     score = calculate_score(idea)
     demand = check_trend(idea)
 
@@ -51,11 +48,11 @@ def analyze_idea(
             "Conduct more market research",
         ]
 
-    # AI Analysis
-    if provider == "Ollama":
-        ai_analysis = run_idea_agent(idea)
-    else:
-        ai_analysis = "Analysis generated using Gemini API (BYOK support enabled)."
+    ai_analysis = run_idea_agent(
+        idea=idea,
+        provider=provider,
+        api_key=api_key,
+    )
 
     return {
         "score": score,

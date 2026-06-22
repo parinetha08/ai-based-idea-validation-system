@@ -7,16 +7,25 @@ from app.backend.services.prompt_builder import build_prompt
 from app.backend.services.ollama_client import generate_response
 
 
-def validate_startup_idea(idea: str):
-    """Validate idea using full LLM pipeline."""
+def validate_startup_idea(
+    idea: str,
+    provider: str = "ollama",
+    api_key: str = "",
+) -> str:
+    """Validate idea using selected provider."""
+
     prompt = build_prompt(idea)
-    return generate_response(prompt)
+
+    return generate_response(
+        prompt=prompt,
+        provider=provider,
+        api_key=api_key,
+    )
 
 
 validation_tool = FunctionTool(func=validate_startup_idea)
 
-
-idea_agent = Agent(
+_idea_agent = Agent(
     name="IdeaValidator",
     description="AI Startup Idea Validation Agent",
     instruction="""
@@ -32,14 +41,22 @@ When given an idea:
 )
 
 
-def run_idea_agent(idea: str):
+def run_idea_agent(
+    idea: str,
+    provider: str = "ollama",
+    api_key: str = "",
+) -> str:
     """Main pipeline entry point used by API."""
 
     print("✅ ADK Agent is running")
     print(f"Idea received: {idea}")
+    print(f"Provider selected: {provider}")
 
-    # actually use the agent (fixes unused variable)
-    response = idea_agent.tools[0].func(idea)
+    response = validate_startup_idea(
+        idea=idea,
+        provider=provider,
+        api_key=api_key,
+    )
 
     print("✅ ADK Agent finished")
 

@@ -1,9 +1,43 @@
 stages:
+  - lint
+  - format
+  - type_check
   - test
+  - coverage
 
-runner-test:
+lint:
+  stage: lint
+  tags:
+    - windows
+  script:
+    - ruff check app tests
+    - semgrep scan .
+
+format:
+  stage: format
+  tags:
+    - windows
+  script:
+    - ruff format --check app tests
+
+type_check:
+  stage: type_check
+  tags:
+    - windows
+  script:
+    - mypy app
+
+test:
   stage: test
   tags:
     - windows
   script:
-    - echo "GitLab Runner is working successfully"
+    - pytest tests -v
+    - pip-audit -r requirements.txt
+
+coverage:
+  stage: coverage
+  tags:
+    - windows
+  script:
+    - pytest --cov=app --cov-report=xml

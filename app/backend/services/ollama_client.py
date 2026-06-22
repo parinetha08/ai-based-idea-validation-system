@@ -1,8 +1,10 @@
 """LLM client supporting Ollama, OpenAI, and Gemini."""
 
+from typing import Any
+
 import requests
 
-from app.core.config import OPENAI_API_KEY, GEMINI_API_KEY, MODEL_NAME
+from app.core.config import GEMINI_API_KEY, MODEL_NAME, OPENAI_API_KEY
 
 
 # -----------------------------
@@ -10,6 +12,7 @@ from app.core.config import OPENAI_API_KEY, GEMINI_API_KEY, MODEL_NAME
 # -----------------------------
 def generate_with_ollama(prompt: str) -> str:
     """Generate response using local Ollama model."""
+
     response = requests.post(
         "http://localhost:11434/api/generate",
         json={
@@ -21,14 +24,17 @@ def generate_with_ollama(prompt: str) -> str:
     )
 
     response.raise_for_status()
-    return response.json()["response"]
+
+    data: dict[str, Any] = response.json()
+    return str(data["response"])
 
 
 # -----------------------------
-# OpenAI (placeholder-ready)
+# OpenAI
 # -----------------------------
 def generate_with_openai(prompt: str) -> str:
     """Generate response using OpenAI API."""
+
     if not OPENAI_API_KEY:
         raise ValueError("OPENAI_API_KEY is not set")
 
@@ -37,9 +43,14 @@ def generate_with_openai(prompt: str) -> str:
         "Content-Type": "application/json",
     }
 
-    payload = {
+    payload: dict[str, Any] = {
         "model": "gpt-4o-mini",
-        "messages": [{"role": "user", "content": prompt}],
+        "messages": [
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
     }
 
     response = requests.post(
@@ -50,51 +61,85 @@ def generate_with_openai(prompt: str) -> str:
     )
 
     response.raise_for_status()
-    return response.json()["choices"][0]["message"]["content"]
+
+    data: dict[str, Any] = response.json()
+    return str(data["choices"][0]["message"]["content"])
 
 
 # -----------------------------
-# Gemini (placeholder-ready)
+# Gemini
 # -----------------------------
-def generate_with_gemini(prompt: str) -> str:
+def generate_with_gemini(
+    prompt: str,
+    api_key: str = "",
+) -> str:
     """Generate response using Gemini API."""
-    if not GEMINI_API_KEY:
-        raise ValueError("GEMINI_API_KEY is not set")
+
+    key = api_key or GEMINI_API_KEY
+
+    if not key:
+        raise ValueError("Gemini API key is required")
 
     url = (
         "https://generativelanguage.googleapis.com/v1beta/"
-        f"models/gemini-pro:generateContent?key={GEMINI_API_KEY}"
+        f"models/gemini-2.5-flash:generateContent?key={key}"
     )
 
-    payload = {"contents": [{"parts": [{"text": prompt}]}]}
+    payload: dict[str, Any] = {
+        "contents": [
+            {
+                "parts": [
+                    {
+                        "text": prompt,
+                    }
+                ]
+            }
+        ]
+    }
 
-    response = requests.post(url, json=payload, timeout=300)
+    response = requests.post(
+        url,
+        json=payload,
+        timeout=300,
+    )
+
     response.raise_for_status()
 
-    data = response.json()
+    data: dict[str, Any] = response.json()
 
-    return data["candidates"][0]["content"]["parts"][0]["text"]
+    return str(data["candidates"][0]["content"]["parts"][0]["text"])
 
 
 # -----------------------------
 # MAIN ROUTER
 # -----------------------------
-def generate_response(prompt: str) -> str:
-    """
-    Main entry point for all LLM calls.
-    Chooses model based on MODEL_NAME.
-    """
+def generate_response(
+    prompt: str,
+    provider: str = "",
+    api_key: str = "",
+) -> str:
+    """Route request to selected provider."""
+
+    selected_provider = provider.lower()
+
+    if selected_provider == "gemini":
+        return generate_with_gemini(
+            prompt=prompt,
+            api_key=api_key,
+        )
+
+    if selected_provider == "ollama":
+        return generate_with_ollama(prompt)
 
     model = (MODEL_NAME or "ollama").lower()
 
-    if "ollama" in model:
-        return generate_with_ollama(prompt)
+    if "gemini" in model:
+        return generate_with_gemini(
+            prompt=prompt,
+            api_key=api_key,
+        )
 
     if "openai" in model:
         return generate_with_openai(prompt)
 
-    if "gemini" in model:
-        return generate_with_gemini(prompt)
-
-    # fallback
     return generate_with_ollama(prompt)

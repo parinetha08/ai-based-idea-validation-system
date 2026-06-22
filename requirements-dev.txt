@@ -1,0 +1,6 @@
+flake8>=7.0.0
+pylint>=3.0.0
+vulture>=2.0
+semgrep
+pip-audit
+pyupgrade>=3.0.0

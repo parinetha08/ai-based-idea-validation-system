@@ -17,4 +17,9 @@ def validate_idea(request: IdeaRequest) -> IdeaResponse:
 
     result = run_idea_agent(cleaned_idea)
 
-    return result
+    return IdeaResponse(
+        score=0,
+        demand=result,
+        risks=[],
+        improvements=[],
+    )

@@ -5,6 +5,11 @@ stages:
   - test
   - coverage
 
+before_script:
+  - python -m pip install --upgrade pip
+  - pip install -r requirements.txt
+  - pip install ruff semgrep mypy pytest pytest-cov pip-audit
+
 lint:
   stage: lint
   tags:

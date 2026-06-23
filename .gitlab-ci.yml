@@ -41,12 +41,3 @@ coverage:
     - windows
   script:
     - pytest --cov=app --cov-report=xml
-changelog:
-  stage: release
-  image: python:3.11
-  script:
-    - pip install git-cliff
-    - git-cliff -o CHANGELOG.md
-  artifacts:
-    paths:
-      - CHANGELOG.md

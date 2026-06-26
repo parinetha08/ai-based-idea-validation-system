@@ -99,7 +99,7 @@ Create a `.env` file in the root directory:
 
 ```env
 OPENAI_API_KEY=your_openai_key
-GEMINI_API_KEY=your_gemini_key
+GEMINI_API_KEY=
 
 MODEL_NAME=gpt-4.1-mini
 
